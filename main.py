@@ -18,8 +18,14 @@ if st.button("✨ Generate Products"):
     if not user_input.strip():
         st.warning("Please describe your product idea.")
     else:
-        with st.spinner("Generating customized product ideas for your brand"):
-
+        with st.spinner("🔬 Analyzing your product requirements..."):
+            import time
+            time.sleep(1.5)  # Brief pause for user experience
+        
+        with st.spinner("🔍 Researching ingredients and formulations..."):
+            time.sleep(1.5) 
+        with st.spinner("💡 Generating custom innovative formulations..."):
+            time.sleep(1.5)
             #Prompt for CHATGPT 
             prompt1= f"""
             You are a healthcare supplement formulations development expert. Based on this product description: "{user_input}", generate 5-7 unique supplement products. The ingredients must be beneficial for the user & should have some studies done on it.
@@ -42,7 +48,9 @@ if st.button("✨ Generate Products"):
                 st.markdown(response_text)
 
                 #hardcoded turnaround and cost estimate (for prototype)
-                st.subheader("Manufacturing Time & Cost Estimates")
+                with st.spinner("💰 Calculating production costs and timelines..."):
+                    time.sleep(0.5)  # Brief pause for effect
+                    st.subheader("Manufacturing Time & Cost Estimates")
                 order_qtys= [1000, 5000, 10000, 20000, 25000, 30000]
                 turnarounds = [14, 21, 25, 30, 35, 40]  # in days
                 cost_per_bottle = [7.84, 7.13, 6.98, 6.30, 5.86, 5.12]  
@@ -56,16 +64,17 @@ if st.button("✨ Generate Products"):
                 st.dataframe(df)
 
                 ## MARKET INSIGHTS PROMPT
-                prompt2 = f"""
-                Based on the product category "{user_input}", list the current Top 10 selling products in the US market. 
-                Include product name, brand, and approximate market share or sales.
-                """
+                with st.spinner("📊 Researching market competitors and trends..."):
+                    prompt2 = f"""
+                    Based on the product category "{user_input}", list the current Top 10 selling products in the US market. 
+                    Include product name, brand, and approximate market share or sales.
+                    """
 
-                completion2 = client.chat.completions.create(
-                    model="gpt-4",
-                    messages=[{"role": "user", "content": prompt2}],
-                    temperature=0.7
-                )
+                    completion2 = client.chat.completions.create(
+                        model="gpt-4",
+                        messages=[{"role": "user", "content": prompt2}],
+                        temperature=0.7
+                    )
 
                 st.subheader("📈 Top 10 Market Products")
                 st.markdown(completion2.choices[0].message.content)
